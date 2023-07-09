@@ -1,0 +1,230 @@
+* {
+  font-family: 'Rubik', sans-serif;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+}
+
+input, button {
+  all: unset;
+}
+
+.header {
+  padding: 20px 40px;
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    user-select: none;
+    background-color: rgb(190, 190, 255);
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  margin: auto;
+  margin-top: 8%;
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
+
+  button {
+    height: 50px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: rgb(84, 84, 250);
+    font-size: 22px;
+    color: whitesmoke;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    background-color: rgb(58, 58, 255);
+  }
+
+  .input-wrapper {
+    margin-top: 15px;
+    position: relative;
+    margin-bottom: 100px;
+
+    input {
+      height: 50px;
+      border: 2px solid rgba(0, 0, 255, 0.322);
+      background-color: rgb(246, 250, 253);
+      font-size: 22px;
+      padding: 0 10px;
+      border-radius: 10px;
+      width: calc(100% - 20px - 2px);
+      transition: 0.2s;
+    }
+
+    span {
+      position: absolute;
+      z-index: 1;
+      text-transform: uppercase;
+      transition: 0.2s;
+      top: 0;
+      left: 0;
+      padding: 14px 15px;
+      font-size: 20px;
+      color: rgb(84, 84, 250);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    input:focus {
+      border: 2px solid rgb(84, 84, 250);
+    }
+
+    input:valid ~ span,
+    input:focus ~ span {
+      font-size: 16px;
+      color: whitesmoke;
+      background-color: rgb(84, 84, 250);
+      margin-left: 1%;
+      margin-bottom: -6px;
+      padding: 0 15px;
+      transform: translateY(-10px)
+    }
+
+    input:disabled {
+      border-color: gray;
+    }
+
+    input:disabled ~ span {
+      color: gray;
+    }
+  }
+
+  .blockchain-selector {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      font-size: 18px;
+    }
+
+    button {
+      height: 20px;
+      border-radius: 5px;
+      padding: 2px 5px;
+      margin: 0;
+      margin-left: 5px ;
+      background-color: rgb(224, 147, 3);
+      display: flex;
+
+      span {
+        font-size: 18px;
+      }
+
+      img {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0.25);
+      }
+    }
+  }
+}
+
+.modal-selector-wrapper.not-active {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-selector-wrapper {
+  pointer-events: all;
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  transition: 0.2s;
+
+  .content {
+    background-color: #fff;
+    width: 30vw;
+    height: 65vh;
+    margin-left: 35vw;
+    margin-top: 5vh;
+    border-radius: 20px;
+    padding: 20px;
+
+    h1 {
+      font-size: 22px;
+      width: 100%;
+      text-align: center;
+      font-weight: 400;
+    }
+
+    .input-wrapper {
+      margin-top: 15px;
+      position: relative;
+
+      input {
+        height: 50px;
+        border-bottom: 2px solid rgb(190, 190, 255);
+        background-color: rgb(246, 250, 253);
+        font-size: 22px;
+        padding: 0 10px;
+        width: calc(100% - 20px - 2px);
+        transition: 0.2s;
+      }
+
+      input:focus {
+        border-bottom: 2px solid rgb(84, 84, 250);
+      }
+    }
+
+    .items {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 40px;
+      grid-auto-rows: max-content;
+
+      .item {
+        display: inline-block;
+        border: 2px solid rgb(190, 190, 255);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
+
+        .title {
+          text-align: center;
+          width: 100%;
+        }
+
+        .img-wrapper {
+
+        }
+      }
+
+      .item.selected {
+        border: 2px solid rgb(190, 190, 255);
+        background-color: rgb(190, 190, 255);
+      }
+
+      .item:hover {
+        cursor: pointer;
+        border: 2px solid rgb(84, 84, 250);
+        background-color: rgb(84, 84, 250);
+        transition: 0.2s;
+        color: white;
+      }
+    }
+  }
+}

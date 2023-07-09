@@ -1,0 +1,71 @@
+<html>
+  <header>
+    <title>Example</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </header>
+
+  <body>
+    <script src="./main.bundle.js"></script>
+
+    <div class="header">
+      <span class="title">WallectConnect v2 Guide</span>
+    </div>
+
+    <div class="main-wrapper">
+      <div class="blockchain-selector">
+        <span>Transaction details:</span>
+        <button id="blockchainSelectBtn">
+          <span>Ethereum</span>
+          <img src="./icons/select-arrow.svg"></img>
+        </button>
+
+        <button id="assetSelectBtn">
+          <span>ETH</span>
+          <img src="./icons/select-arrow.svg"></img>
+        </button>
+      </div>
+
+      <div class="input-wrapper">
+        <input type="text" id="recipientAddressInput" autocomplete="off" required/>
+        <span>Recipient address</span>
+      </div>
+
+      <button id="connectWcBtn" type="submit">Connect WallectConnect</button>
+      <button id="sendBtn" type="submit">Send Transaction</button>
+    </div>
+
+    <div class="modal-selector-wrapper not-active" id="modalSelector">
+      <div class="content">
+        <h1 id="modalSelectorTitle">Example</h1>
+        <div class="input-wrapper">
+          <input type="text" id="recipientAddressInput" autocomplete="off" placeholder="Search"/>
+        </div>
+
+        <div class="items" id="modalSelectorItems">
+          <div class="item">
+            <div class="title">Ethereum</div>
+          </div>
+
+          <div class="item">
+            <div class="title">Ethereum</div>
+          </div>
+
+          <div class="item">
+            <div class="title">Ethereum</div>
+          </div>
+
+          <div class="item">
+            <div class="title">Ethereum</div>
+          </div>
+
+          <div class="item">
+            <div class="title">Ethereum</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
