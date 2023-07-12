@@ -10,20 +10,37 @@ const namespaces = {
   }
 };
 
-export const connectWc = async () => {
-  const signClient = await SignClient.init({
-    projectId: projectId,
-    metadata: {
-        name: 'dPosit',
-        description: 'Sample app to test WalletConnect.',
-        url: 'https://dev.dposit.dev/',
-        icons: ['https://dev.dposit.dev/svg/logo.svg']
-    }
-  });
-  signClient.on('session_delete', () => {
-    console.log('Session deleted from wallet side');
-  });
+let buffSignClient = null;
+export const getSignClient = async () => {
+  if (!buffSignClient) {
+    const signClient = await SignClient.init({
+      projectId: projectId,
+      metadata: {
+          name: 'dPosit',
+          description: 'Sample app to test WalletConnect.',
+          url: 'https://dev.dposit.dev/',
+          icons: ['https://dev.dposit.dev/svg/logo.svg']
+      }
+    });
+    signClient.on('session_delete', () => {
+      localStorage.clear();
+    });
 
+    buffSignClient = signClient;
+    return signClient;
+  } else {
+    return buffSignClient;
+  }
+}
+
+export const getLastSession = (signClient) => {
+  const lastKeyIndex = signClient.session.getAll().length - 1;
+  const lastSession = signClient.session.getAll()[lastKeyIndex];
+
+  return lastSession;
+}
+
+export const connectWc = async (signClient) => {
   const web3Modal = new Web3Modal({
       walletConnectVersion: 2,
       projectId: projectId,
@@ -42,8 +59,8 @@ export const connectWc = async () => {
         standaloneChains: [...namespaces.eip155.chains]
     });
     const session = await approval();
-    window.walletConnect.session = session;
     web3Modal.closeModal();
+    return session;
   }
 }
 

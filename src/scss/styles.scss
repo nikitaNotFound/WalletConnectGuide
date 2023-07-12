@@ -36,20 +36,26 @@ input, button {
   border-radius: 20px;
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
 
-  button {
-    height: 50px;
-    margin-top: 20px;
-    cursor: pointer;
-    background-color: rgb(84, 84, 250);
-    font-size: 22px;
-    color: whitesmoke;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.2s;
-  }
+  .actions-wrapper {
+    display: flex;
+    flex-direction: column;
 
-  button:hover {
-    background-color: rgb(58, 58, 255);
+    button {
+      display: none;
+      height: 50px;
+      margin-top: 20px;
+      cursor: pointer;
+      background-color: rgb(84, 84, 250);
+      font-size: 22px;
+      color: whitesmoke;
+      border-radius: 10px;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: rgb(58, 58, 255);
+    }
   }
 
   .input-wrapper {
