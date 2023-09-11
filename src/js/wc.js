@@ -11,7 +11,9 @@ const namespaces = {
 };
 
 let buffSignClient = null;
-export const getSignClient = async () => {
+export const getSignClient = async ({
+  onWcSessionDeleted,
+}) => {
   if (!buffSignClient) {
     const signClient = await SignClient.init({
       projectId: projectId,
@@ -24,6 +26,10 @@ export const getSignClient = async () => {
     });
     signClient.on('session_delete', () => {
       localStorage.clear();
+      onWcSessionDeleted();
+    });
+    signClient.on('session_request', () => {
+      console.log('on session request');
     });
 
     buffSignClient = signClient;
@@ -40,13 +46,18 @@ export const getLastSession = (signClient) => {
   return lastSession;
 }
 
-export const connectWc = async (signClient) => {
+export const connectWc = async (signClient, onModalClose) => {
   const web3Modal = new Web3Modal({
       walletConnectVersion: 2,
       projectId: projectId,
       themeMode: 'light',
       themeBackground: 'gradient',
       themeColor: 'purple'
+  });
+  web3Modal.subscribeModal(newState => {
+    if (!newState.open) {
+      onModalClose(false);
+    }
   });
 
   const { uri, approval } = await signClient.connect({

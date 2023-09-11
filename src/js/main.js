@@ -3,6 +3,7 @@ import '../scss/background.scss';
 import { connectWc, getSignClient, getLastSession } from './wc';
 import { openModalSelector } from './modal-selector';
 import { ASSETS, BLOCKCHAINS } from './crypto';
+import { showToast } from './toasts';
 
 const onBlockchainSelected = (selectedItem) => {
   blockchainSelectEl.children[0].innerText = selectedItem;
@@ -12,18 +13,71 @@ const onAssetSelected = (selectedItem) => {
   assetSelectEl.children[0].innerText = selectedItem;
 }
 
-const onConnectWlClicked = async () => {
-  const signClient = await getSignClient();
-  const session = await connectWc(signClient);
-  console.log(session);
-}
-
 const inputEl = document.getElementById("recipientAddressInput");
-const connectWcEl = document.getElementById("connectWcBtn");
-const sendEl = document.getElementById("sendBtn");
+const actionsWrapper = document.getElementById("actionsWrapper");
+let connectWcEl = null;
+let connectWcHtml = '<button id="connectWcBtn" type="submit">Connect WallectConnect</button>';
+let sendEl = null;
+let sendHtml = '<button id="sendBtn" type="submit">Send Transaction</button>';
+let actionsSpinnerEl = null;
+let actionsSpinnerHtml = '<div class="actions-spinner" id="actionsSpinner"><img src="./icons/spinner.svg"></img></div>';
 
 const blockchainSelectEl = document.getElementById("blockchainSelectBtn");
 const assetSelectEl = document.getElementById("assetSelectBtn");
+
+const enableConnectWcBtn = () => {
+  actionsWrapper.innerHTML = connectWcHtml;
+  connectWcEl = document.getElementById("connectWcBtn");
+  connectWcEl.onclick = onConnectWlClicked;
+}
+const disableConnectWcBtn = () => {
+  connectWcEl.remove();
+}
+
+const enableSendTxBtn = () => {
+  actionsWrapper.innerHTML = sendHtml;
+  sendEl = document.getElementById("sendBtn");
+  sendEl.onclick = () => {}
+}
+const disableSendTxBtn = () => {
+  sendEl.remove();
+}
+
+const enableSpinner = () => {
+  actionsWrapper.innerHTML = actionsSpinnerHtml;
+  actionsSpinnerEl = document.getElementById("actionsSpinner");
+}
+const disableSpinner = () => {
+  actionsSpinnerEl.remove();
+}
+
+const onWcSessionDeleted = () => {
+  disableSendTxBtn();
+  enableConnectWcBtn();
+}
+
+const onConnectWlClicked = async () => {
+  const signClient = await getSignClient({
+    onWcSessionDeleted,
+  });
+  try {
+    disableConnectWcBtn();
+    enableSpinner();
+    const session = await connectWc(
+      signClient,
+      (isSuccess) => {
+        disableSpinner();
+        if (isSuccess) {
+          enableSendTxBtn();
+        } else {
+          enableConnectWcBtn();
+        }
+      }
+    );
+  } catch {
+    showToast('error', 'Connect request was rejected.');
+  }
+}
 
 blockchainSelectEl.onclick = () => openModalSelector({
   title: 'Select transaction blockchain',
@@ -38,16 +92,16 @@ assetSelectEl.onclick = () => openModalSelector({
   selected: assetSelectEl.children[0].innerText
 });
 
-connectWcEl.onclick = onConnectWlClicked;
-
 const main = async () => {
-  const signClient = await getSignClient();
+  const signClient = await getSignClient({
+    onWcSessionDeleted,
+  });
   const lastSession = getLastSession(signClient);
   console.log({signClient, lastSession})
   if (!lastSession) {
-    connectWcEl.style.display = 'block';
+    enableConnectWcBtn();
   } else {
-    sendEl.style.display = 'block';
+    enableSendTxBtn();
   }
 }
 main();
