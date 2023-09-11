@@ -1,4 +1,5 @@
 import '../scss/styles.scss';
+import '../scss/background.scss';
 import { connectWc, getSignClient, getLastSession } from './wc';
 import { openModalSelector } from './modal-selector';
 import { ASSETS, BLOCKCHAINS } from './crypto';
