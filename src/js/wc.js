@@ -54,9 +54,10 @@ export const connectWc = async (signClient, onModalClose) => {
       themeBackground: 'gradient',
       themeColor: 'purple'
   });
+  let isSuccess = false;
   web3Modal.subscribeModal(newState => {
     if (!newState.open) {
-      onModalClose(false);
+      onModalClose(isSuccess);
     }
   });
 
@@ -70,6 +71,7 @@ export const connectWc = async (signClient, onModalClose) => {
         standaloneChains: [...namespaces.eip155.chains]
     });
     const session = await approval();
+    isSuccess = true;
     web3Modal.closeModal();
     return session;
   }
