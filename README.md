@@ -1,2 +1,1 @@
-# light-static-web-app-template
-Static web app template БЕЗ ВСЯКОЙ ХУЙНИ.
+# Wallet Connect v2 Guide
