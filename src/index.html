@@ -5,6 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="./main.bundle.js"></script>
   </header>
 
   <body>
@@ -19,6 +20,16 @@
           <span>Ethereum</span>
           <img src="./icons/select-arrow.svg"></img>
         </button>
+      </div>
+
+      <div class="input-wrapper">
+        <input type="text" id="recipientAddressInput" autocomplete="off" required/>
+        <span>Recipient address</span>
+      </div>
+
+      <div class="input-wrapper token-amount-input">
+        <input type="text" id="tokenSendAmountInput" autocomplete="off" required/>
+        <span>Amount</span>
 
         <button id="assetSelectBtn">
           <span>ETH</span>
@@ -26,10 +37,6 @@
         </button>
       </div>
 
-      <div class="input-wrapper">
-        <input type="text" id="recipientAddressInput" autocomplete="off" required/>
-        <span>Recipient address</span>
-      </div>
 
       <div class="actions-wrapper" id="actionsWrapper">
 
@@ -81,7 +88,5 @@
         <li></li>
       </ul>
     </div >
-
-    <script src="./main.bundle.js"></script>
   </body>
 </html>
