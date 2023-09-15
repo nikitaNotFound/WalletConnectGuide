@@ -300,6 +300,29 @@ input, button {
   }
 }
 
+.social-media {
+  position: absolute;
+  bottom: 5%;
+  left: 40px;
+  display: flex;
+  flex-direction: column;
+
+  .social-media-item {
+    cursor: pointer;
+    background-color: rgb(190, 190, 255);
+    border-radius: 50%;
+    padding: 0.5rem;
+    img {
+      width: 2rem;
+      height: 2rem;
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    }
+  }
+  .social-media-item + .social-media-item {
+    margin-top: 10px;
+  }
+}
+
 @keyframes loading {
   0% {
     transform: rotate(0deg);
