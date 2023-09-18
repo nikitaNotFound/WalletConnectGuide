@@ -1,3 +1,4 @@
+import '../scss/variables.scss';
 import '../scss/styles.scss';
 import '../scss/background.scss';
 import { connectWc, getSignClient, getLastSession } from './wc';
