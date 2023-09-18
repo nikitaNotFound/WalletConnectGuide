@@ -1,4 +1,5 @@
 @import "variables.scss";
+@import "right-side-menu.scss";
 
 * {
   font-family: 'Rubik', sans-serif;
@@ -8,6 +9,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: #fff;
+  overflow: hidden;
 }
 
 input, button {
@@ -31,7 +33,7 @@ input, button {
     border-radius: 20px;
   }
 
-  .right-side-menu {
+  .right-side-actions {
     user-select: none;
     color: $secondary-text-color;
     display: flex;

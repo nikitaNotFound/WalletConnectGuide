@@ -1,0 +1,18 @@
+.right-side-menu {
+  height: 100vh;
+  width: 30vw;
+  background-color: whitesmoke;
+  position: absolute;
+  top: 0;
+  right: -30vw;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
+  transition: 0.2s;
+
+  .header {
+    color: $primary-text-color;
+  }
+}
+
+.right-side-menu.opened {
+  right: 0;
+}

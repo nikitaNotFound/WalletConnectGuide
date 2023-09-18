@@ -26,6 +26,9 @@ let actionsSpinnerHtml = '<div class="actions-spinner" id="actionsSpinner"><img 
 const blockchainSelectEl = document.getElementById("blockchainSelectBtn");
 const assetSelectEl = document.getElementById("assetSelectBtn");
 
+const rightSideMenu = document.getElementById("rightSideMenu");
+const txHistoryBtn = document.getElementById("txHistoryBtn");
+
 const enableConnectWcBtn = () => {
   actionsWrapper.innerHTML = connectWcHtml;
   connectWcEl = document.getElementById("connectWcBtn");
@@ -77,6 +80,36 @@ const onConnectWlClicked = async () => {
     );
   } catch {
     showToast('error', 'Connect request was rejected.');
+  }
+}
+
+let txHistoryOpened = false;
+
+const disableRightSideMenu = () => {
+  rightSideMenu.className = 'right-side-menu';
+  window.removeEventListener('click', onRightSideMenuClose);
+}
+
+const onRightSideMenuClose = (event) => {
+  txHistoryOpened = false;
+  if (event.target != rightSideMenu) {
+    disableRightSideMenu();
+  }
+}
+
+const enableRightSideMenu = (event) => {
+  txHistoryOpened = true;
+  rightSideMenu.className = 'right-side-menu opened';
+
+  event.stopPropagation();
+  window.addEventListener('click', onRightSideMenuClose);
+}
+
+txHistoryBtn.onclick = (event) => {
+  if (txHistoryOpened === false) {
+    enableRightSideMenu(event);
+  } else {
+    disableRightSideMenu();
   }
 }
 
