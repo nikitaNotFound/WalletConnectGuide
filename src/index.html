@@ -23,27 +23,29 @@
     </div>
 
     <div class="main-wrapper">
-      <div class="blockchain-selector">
+      <div class="transaction-details">
         <span>Transaction details:</span>
-        <button id="blockchainSelectBtn">
-          <span>Ethereum</span>
-          <img src="./icons/select-arrow.svg"></img>
-        </button>
+        <span class="network">Ethereum</span>
       </div>
 
       <div class="input-wrapper token-amount-input">
-        <input type="text" id="tokenSendAmountInput" autocomplete="off" required/>
-        <span>Amount</span>
+        <input type="text" id="amountInInput" autocomplete="off" required/>
+        <span>Amount in</span>
 
-        <button id="assetSelectBtn">
+        <button id="assetSelectInBtn">
           <span>ETH</span>
           <img src="./icons/select-arrow.svg"></img>
         </button>
       </div>
 
-      <div class="input-wrapper">
-        <input type="text" id="recipientAddressInput" autocomplete="off" required/>
-        <span>Recipient address</span>
+      <div class="input-wrapper token-amount-input">
+        <input type="text" id="amountOutInput" autocomplete="off" required/>
+        <span>Amount out</span>
+
+        <button id="assetSelectOutBtn">
+          <span>USDT</span>
+          <img src="./icons/select-arrow.svg"></img>
+        </button>
       </div>
 
       <div class="actions-wrapper" id="actionsWrapper">

@@ -122,32 +122,9 @@ export const sendTransactionWc = async ({
   }
 }
 
-const assetAmountFormatters = {
-  ETH: (amount) => `0x${ethers.parseUnits(amount, 18).toString(16)}`,
-  USDT: (amount) => `0x${ethers.parseUnits(amount, 6).toString(16)}`
-}
-const formatAssetAmount = (assetName, amount) => assetAmountFormatters[assetName](amount);
-
-const assetTransactionDataGenerators = {
-  USDT: (destinationAddress, amount) => {
-      const usdtContract = new ethers.Contract(assetSmartContractAddresses.USDT, UsdtAbi);
-
-      return usdtContract.interface.encodeFunctionData('transfer', [destinationAddress, amount]);
-  }
-};
-const generateAssetTransactionData = (assetName, destinationAddress, amount) => {
-  const generator = assetTransactionDataGenerators[assetName];
-
-  return !generator ? '0x' : generator(destinationAddress, amount);
-}
-
 const assetChains = {
   ETH: 'eip155:1'
 }
-
-const assetSmartContractAddresses = {
-  USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-};
 
 export const getAccountsWc = () => {
   const accountArrays = Object.values(window.walletConnect.session.namespaces).map(n => n.accounts);

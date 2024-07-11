@@ -3,18 +3,30 @@ import '../scss/styles.scss';
 import '../scss/background.scss';
 import { connectWc, getSignClient, getLastSession } from './wc';
 import { openModalSelector } from './modal-selector';
-import { ASSETS, BLOCKCHAINS } from './crypto';
 import { showToast } from './toasts';
+import { ASSETS, getAmountOut } from './crypto';
+import { ethers } from 'ethers';
 
-const onBlockchainSelected = (selectedItem) => {
-  blockchainSelectEl.children[0].innerText = selectedItem;
+let formData = {
+  inAsset: 'ETH',
+  outAsset: 'USDT',
+  amountIn: null
+};
+const handleFormUpdate = async () => {
+  if (/^(?!0\d|0(?!\.\d+$)|.*[,.]$|.*\s|^\.)\d+(\.\d+)?$/.test(formData.amountIn) === false || formData.amountIn === 0) {
+    return;
+  }
+
+  if (formData.inAsset && formData.outAsset && formData.amountIn) {
+    const inAsset = ASSETS.find(a => a.name == formData.inAsset);
+    const outAsset = ASSETS.find(a => a.name == formData.outAsset);
+    const amountIn = ethers.parseUnits(formData.amountIn, 18);
+    const amountOut = await getAmountOut(amountIn, inAsset.address, outAsset.address);
+
+    assetAmountOutEl.value = ethers.formatUnits(amountOut, outAsset.decimals);
+  }
 }
 
-const onAssetSelected = (selectedItem) => {
-  assetSelectEl.children[0].innerText = selectedItem;
-}
-
-const inputEl = document.getElementById("recipientAddressInput");
 const actionsWrapper = document.getElementById("actionsWrapper");
 let connectWcEl = null;
 let connectWcHtml = '<button id="connectWcBtn" type="submit">Connect WallectConnect</button>';
@@ -23,9 +35,10 @@ let sendHtml = '<button id="sendBtn" type="submit">Send Transaction</button>';
 let actionsSpinnerEl = null;
 let actionsSpinnerHtml = '<div class="actions-spinner" id="actionsSpinner"><img src="./icons/spinner.svg"></img></div>';
 
-const blockchainSelectEl = document.getElementById("blockchainSelectBtn");
-const assetSelectEl = document.getElementById("assetSelectBtn");
-
+const assetSelectInEl = document.getElementById("assetSelectInBtn");
+const assetAmountInEl = document.getElementById("amountInInput");
+const assetSelectOutEl = document.getElementById("assetSelectOutBtn");
+const assetAmountOutEl = document.getElementById("amountOutInput");
 const rightSideMenu = document.getElementById("rightSideMenu");
 const txHistoryBtn = document.getElementById("txHistoryBtn");
 
@@ -113,18 +126,38 @@ txHistoryBtn.onclick = (event) => {
   }
 }
 
-blockchainSelectEl.onclick = () => openModalSelector({
-  title: 'Select transaction blockchain',
-  items: BLOCKCHAINS,
-  onSelectCallback: onBlockchainSelected,
-  selected: blockchainSelectEl.children[0].innerText
+assetSelectInEl.onclick = () => openModalSelector({
+  title: 'Select in asset',
+  items: ASSETS.map(a => a.name),
+  onSelectCallback: (i) => {
+    assetSelectInEl.children[0].innerText = i;
+    formData.inAsset = i;
+    handleFormUpdate();
+  },
+  selected: assetSelectInEl.children[0].innerText
 });
-assetSelectEl.onclick = () => openModalSelector({
-  title: 'Select transaction asset',
-  items: ASSETS,
-  onSelectCallback: onAssetSelected,
-  selected: assetSelectEl.children[0].innerText
+
+assetSelectOutEl.onclick = () => openModalSelector({
+  title: 'Select out asset',
+  items: ASSETS.map(a => a.name),
+  onSelectCallback: (i) => {
+    assetSelectOutEl.children[0].innerText = i;
+    formData.outAsset = i;
+    handleFormUpdate();
+  },
+  selected: assetSelectOutEl.children[0].innerText
 });
+
+assetAmountInEl.oninput = (event) => {
+  const newValue = event.target.value;
+  if (newValue != '' && /^(?!0\d|^\.)\d+(?:\.\d*)?$/.test(newValue) === false) {
+    assetAmountInEl.value = formData.amountIn;
+    return;
+  }
+
+  formData.amountIn = newValue;
+  handleFormUpdate();
+}
 
 const main = async () => {
   const signClient = await getSignClient({

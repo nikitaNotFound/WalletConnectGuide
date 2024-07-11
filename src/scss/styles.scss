@@ -23,6 +23,10 @@ input, button {
   align-items: center;
   padding: 20px 40px;
 
+  @media screen and (max-width: 1140px) {
+    padding: 20px 20px;
+  }
+
   .title {
     font-size: 24px;
     font-weight: bold;
@@ -68,7 +72,7 @@ input, button {
 .main-wrapper {
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  width: 35vw;
   margin: auto;
   margin-top: 8%;
   background-color: #fff;
@@ -76,6 +80,10 @@ input, button {
   border-radius: 20px;
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
   color: $primary-text-color;
+
+  @media screen and (max-width: 1140px) {
+      width: 85vw;
+  }
 
   .actions-wrapper {
     display: flex;
@@ -212,7 +220,7 @@ input, button {
     }
   }
 
-  .blockchain-selector {
+  .transaction-details {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -223,7 +231,7 @@ input, button {
       font-size: 20px;
     }
 
-    button {
+    .network {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -235,17 +243,8 @@ input, button {
       background-color: $secondary-color;
       color: $secondary-text-color;
       display: flex;
-      cursor: pointer;
-
-      span {
-        font-size: 18px;
-      }
-
-      img {
-        width: 20px;
-        height: 20px;
-        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
-      }
+      text-align: center;
+      font-size: 18px;
     }
   }
 }
@@ -349,6 +348,19 @@ input, button {
   display: flex;
   flex-direction: column;
 
+  @media screen and (max-width: 1140px) {
+    flex-direction: row;
+
+    .social-media-item {
+      padding: 0.75rem;
+    }
+
+    .social-media-item + .social-media-item {
+      margin-left: 10px;
+      margin-top: 0px;
+    }
+  }
+
   .social-media-item {
     cursor: pointer;
     background-color: $main-color;
@@ -367,8 +379,12 @@ input, button {
     background-color: rgb(177, 177, 255);
   }
 
-  .social-media-item + .social-media-item {
-    margin-top: 10px;
+  @media screen and (min-width: 1140px) {
+    flex-direction: row;
+
+    .social-media-item + .social-media-item {
+      margin-top: 10px;
+    }
   }
 }
 
